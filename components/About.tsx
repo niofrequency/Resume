@@ -30,7 +30,7 @@ const About: React.FC = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 pt-12 border-t border-slate-200 dark:border-white/10">
             <div>
-              <span className="block text-4xl font-bold text-slate-900 dark:text-white mb-2">4+</span>
+              <span className="block text-4xl font-bold text-slate-900 dark:text-white mb-2">6+</span>
               <span className="text-sm text-slate-500 dark:text-slate-400 uppercase tracking-wider">Years Exp.</span>
             </div>
             <div>
