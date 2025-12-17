@@ -105,16 +105,6 @@ const Hero: React.FC = () => {
             <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-gradient-to-r from-primary to-secondary opacity-20 blur-2xl rounded-full" />
         </motion.div>
       </div>
-
-      {/* Scroll Down Indicator */}
-      <motion.div 
-        animate={{ y: [0, 10, 0] }}
-        transition={{ repeat: Infinity, duration: 1.5 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-slate-400"
-      >
-        <span className="text-sm font-mono tracking-widest uppercase mb-2 block text-center">Scroll</span>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-primary to-transparent mx-auto" />
-      </motion.div>
     </section>
   );
 };
