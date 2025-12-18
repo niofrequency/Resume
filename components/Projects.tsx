@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { PROJECTS } from '../constants';
-import { FaGithub, FaExternalLinkAlt, FaShieldAlt, FaSnowflake, FaRocket } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaShieldAlt, FaSnowflake, FaRocket, FaDatabase, FaCogs, FaBookOpen } from 'react-icons/fa';
 import { Project } from '../types';
 
 const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
@@ -28,79 +28,68 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   const rotateX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
   const rotateY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
 
-  // Helper function to render the correct logo based on ID
+  // Shared Dark Navy Carbon Fiber Logo Wrapper
+  const CarbonLogo = ({ icon: Icon, acronym }: { icon?: any, acronym: string }) => (
+    <div className="w-full h-full relative flex items-center justify-center overflow-hidden bg-[#020617]">
+      {/* Carbon Fiber Pattern in Dark Navy */}
+      <div 
+        className="absolute inset-0 opacity-50 pointer-events-none" 
+        style={{ 
+          backgroundImage: `
+            linear-gradient(45deg, #0f172a 25%, transparent 25%), 
+            linear-gradient(-45deg, #0f172a 25%, transparent 25%), 
+            linear-gradient(45deg, transparent 75%, #0f172a 75%), 
+            linear-gradient(-45deg, transparent 75%, #0f172a 75%)
+          `,
+          backgroundSize: '8px 8px',
+          backgroundColor: '#020617'
+        }} 
+      />
+      
+      {/* Techy Blue Glow & Scanlines */}
+      <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,rgba(0,212,255,0.15)_0%,transparent_70%)]" />
+      <div className="absolute inset-0 opacity-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(0,212,255,0.05),rgba(0,212,255,0.02),rgba(0,212,255,0.05))] bg-[length:100%_2px,3px_100%]" />
+      
+      <div className="relative z-10 flex flex-col items-center">
+        {Icon && <Icon className="text-white/90 text-4xl mb-3 drop-shadow-[0_0_12px_rgba(0,212,255,0.4)]" />}
+        <span className="text-white text-7xl font-black tracking-tighter font-mono flex items-center drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+          {acronym}
+          <span className="w-2 h-10 bg-primary ml-2 animate-pulse" />
+        </span>
+      </div>
+
+      {/* Frame accents in Cyan */}
+      <div className="absolute top-4 left-4 w-5 h-5 border-t-2 border-l-2 border-primary/30" />
+      <div className="absolute top-4 right-4 w-5 h-5 border-t-2 border-r-2 border-primary/30" />
+      <div className="absolute bottom-4 left-4 w-5 h-5 border-b-2 border-l-2 border-primary/30" />
+      <div className="absolute bottom-4 right-4 w-5 h-5 border-b-2 border-r-2 border-primary/30" />
+      
+      {/* Secondary tech accents */}
+      <div className="absolute top-8 left-4 w-1 h-8 bg-primary/10" />
+      <div className="absolute bottom-8 right-4 w-1 h-8 bg-primary/10" />
+    </div>
+  );
+
   const renderProjectLogo = () => {
     switch (project.id) {
       case 'rank-rocket':
-        return (
-          <div className="w-full h-full bg-[#1e1b4b] flex items-center justify-center relative overflow-hidden">
-            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,#4f46e5_1px,transparent_1px)] [background-size:24px_24px]" />
-            <div className="flex flex-col items-center relative z-10">
-                <FaRocket className="text-pink-500 text-5xl mb-2 drop-shadow-[0_0_10px_rgba(236,72,153,0.8)]" />
-                <span className="text-white text-7xl font-black tracking-tighter italic">RR</span>
-            </div>
-          </div>
-        );
+        return <CarbonLogo acronym="RR" icon={FaRocket} />;
       case 'carrier-extract':
-        return (
-          <div className="w-full h-full bg-slate-900 flex items-center justify-center overflow-hidden">
-            <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#00D4FF_1px,transparent_1px)] [background-size:20px_20px]" />
-            <span className="text-primary text-8xl font-black tracking-tighter relative z-10 drop-shadow-[0_0_15px_rgba(0,212,255,0.5)]">CE</span>
-          </div>
-        );
+        return <CarbonLogo acronym="CE" icon={FaDatabase} />;
       case 'mil-tiga-delapan':
-        return (
-          <div className="w-full h-full bg-slate-800 flex items-center justify-center border-b-4 border-orange-500">
-            <span className="text-white text-7xl font-bold tracking-tighter flex flex-col items-center">
-              <span className="text-orange-500 text-2xl mb-1 font-mono tracking-widest uppercase">Mining & Ind.</span>
-              M38
-            </span>
-          </div>
-        );
+        return <CarbonLogo acronym="M38" icon={FaCogs} />;
       case 'daily-bread':
-        return (
-          <div className="w-full h-full bg-[#fdf6e3] flex items-center justify-center">
-            <div className="w-32 h-32 rounded-full border-4 border-[#859900] flex items-center justify-center bg-white shadow-xl">
-              <span className="text-[#859900] text-6xl font-serif italic font-bold">DB</span>
-            </div>
-          </div>
-        );
+        return <CarbonLogo acronym="DB" icon={FaBookOpen} />;
       case 'reefer-guru':
-        return (
-          <div className="w-full h-full bg-[#0047AB] flex items-center justify-center relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-full opacity-10">
-                <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.1)_50%,transparent_100%)] animate-pulse" />
-            </div>
-            <div className="flex flex-col items-center relative z-10">
-                <FaSnowflake className="text-sky-300 text-4xl mb-2 animate-spin-slow opacity-60" style={{ animationDuration: '8s' }} />
-                <span className="text-white text-8xl font-black tracking-tighter drop-shadow-lg">RG</span>
-            </div>
-          </div>
-        );
+        return <CarbonLogo acronym="RG" icon={FaSnowflake} />;
       case 'site-armor':
-        return (
-          <div className="w-full h-full bg-[#064E3B] flex items-center justify-center relative">
-            <div className="absolute inset-0 opacity-10 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(16,185,129,1)_3px)]" />
-            <div className="w-40 h-40 border-2 border-emerald-500/30 rounded-2xl rotate-45 flex items-center justify-center relative">
-                <div className="rotate-[-45deg] flex flex-col items-center">
-                    <FaShieldAlt className="text-emerald-400 text-3xl mb-1" />
-                    <span className="text-emerald-50 text-7xl font-black tracking-tighter drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]">SA</span>
-                </div>
-            </div>
-          </div>
-        );
+        return <CarbonLogo acronym="SA" icon={FaShieldAlt} />;
       default:
         return (
-          <div className="w-full h-full bg-white p-4 flex items-center justify-center">
-            {project.image ? (
-              <img 
-                src={project.image} 
-                alt={project.title} 
-                className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
-              />
-            ) : (
-              <span className="text-slate-300 text-8xl font-bold">{project.title.substring(0, 2).toUpperCase()}</span>
-            )}
+          <div className="w-full h-full bg-[#020617] flex items-center justify-center">
+             <span className="text-white text-8xl font-black tracking-tighter">
+                {project.title.substring(0, 2).toUpperCase()}
+             </span>
           </div>
         );
     }
@@ -123,7 +112,6 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
       />
       
       <div className="bg-white dark:bg-space-800 rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 h-full flex flex-col relative z-10 shadow-2xl transition-colors duration-300">
-        {/* Image / Logo Container */}
         <div className="relative h-56 overflow-hidden">
           {renderProjectLogo()}
         </div>
