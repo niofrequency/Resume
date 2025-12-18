@@ -78,6 +78,17 @@ export const EXPERIENCE: Experience[] = [
 
 export const PROJECTS: Project[] = [
   {
+    id: "rank-rocket",
+    title: "Rank Rocket",
+    description: "A professional SEO keyword research tool powered by advanced AI, featuring live search grounding for accurate, real-time metrics and insights.",
+    tags: ["AI", "SEO", "Search Grounding", "Next.js"],
+    links: {
+      demo: "https://rankrocket.vercel.app/",
+      repo: "#"
+    },
+    image: ""
+  },
+  {
     id: "carrier-extract",
     title: "CarrierExtract",
     description: "An AI-powered tool to extract structured TypeScript data from any PDF files. Engineered for developers who need to turn unstructured logistics or technical documents into actionable code objects.",
