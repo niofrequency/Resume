@@ -1,6 +1,9 @@
+
+
 import React, { useState, useEffect } from 'react';
 import { FaSun, FaMoon, FaDownload, FaBars, FaTimes } from 'react-icons/fa';
-import { motion, AnimatePresence } from 'framer-motion';
+// Fix: Import Variants type from framer-motion to resolve type inference issues with animation properties
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { PERSONAL_INFO } from '../constants';
 
 const Header: React.FC = () => {
@@ -8,7 +11,7 @@ const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
-  // Handle scroll effect
+  // Handle scroll effect for sticky header
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
@@ -23,6 +26,15 @@ const Header: React.FC = () => {
       document.documentElement.classList.remove('dark');
     }
   }, [theme]);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isMobileMenuOpen]);
 
   const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
 
@@ -51,11 +63,41 @@ const Header: React.FC = () => {
     { name: 'Contact', href: '#contact' },
   ];
 
+  // Fix: Explicitly typing menuVariants as Variants to ensure 'type: "spring"' is correctly recognized as AnimationGeneratorType
+  const menuVariants: Variants = {
+    closed: {
+      opacity: 0,
+      x: "100%",
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 40
+      }
+    },
+    open: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 40,
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  // Fix: Explicitly typing linkVariants as Variants
+  const linkVariants: Variants = {
+    closed: { x: 20, opacity: 0 },
+    open: { x: 0, opacity: 1 }
+  };
+
   return (
     <header 
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'py-3 bg-white/80 dark:bg-space-900/80 backdrop-blur-md border-b border-slate-200 dark:border-white/10' 
+      className={`fixed top-0 w-full z-[100] transition-all duration-300 ${
+        isScrolled || isMobileMenuOpen
+          ? 'py-4 bg-white/90 dark:bg-space-900/95 backdrop-blur-md border-b border-slate-200 dark:border-white/10' 
           : 'py-6 bg-transparent'
       }`}
     >
@@ -66,8 +108,9 @@ const Header: React.FC = () => {
           onClick={(e) => {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            setIsMobileMenuOpen(false);
           }}
-          className="text-2xl font-bold font-mono tracking-tighter text-slate-900 dark:text-white"
+          className="text-2xl font-bold font-mono tracking-tighter text-slate-900 dark:text-white z-[110]"
         >
           MP<span className="text-primary">.dev</span>
         </a>
@@ -94,7 +137,7 @@ const Header: React.FC = () => {
           </button>
 
           <a 
-            href="Resume/Mark_Pigome_Resume.pdf"
+            href="/Mark_Pigome_Resume.pdf"
             download="Mark_Pigome_Resume.pdf"
             className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary to-secondary rounded-lg text-white font-bold text-sm hover:opacity-90 transition-opacity shadow-[0_0_15px_rgba(0,212,255,0.3)]"
           >
@@ -103,47 +146,82 @@ const Header: React.FC = () => {
           </a>
         </nav>
 
-        {/* Mobile Toggle */}
+        {/* Mobile Toggle Button */}
         <button 
-          className="md:hidden text-slate-900 dark:text-slate-200 text-2xl"
+          className="md:hidden text-slate-900 dark:text-slate-200 text-2xl z-[110] p-2 hover:text-primary transition-colors"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle Mobile Menu"
         >
           {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 w-full bg-white dark:bg-space-900 border-b border-slate-200 dark:border-white/10 md:hidden flex flex-col items-center py-6 gap-6 shadow-2xl"
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={menuVariants}
+            className="fixed inset-0 w-full h-screen bg-white dark:bg-space-900 z-[100] md:hidden flex flex-col items-center justify-center p-6"
           >
-            {navLinks.map((link) => (
-              <a 
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="text-lg text-slate-800 dark:text-slate-300 hover:text-primary cursor-pointer"
-              >
-                {link.name}
-              </a>
-            ))}
-            <div className="flex gap-4">
-              <button onClick={toggleTheme} className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-primary">
-                {theme === 'dark' ? <FaSun /> : <FaMoon />}
-              </button>
+            {/* Nav Links in Center */}
+            <div className="flex flex-col items-center gap-8 mb-12">
+              {navLinks.map((link) => (
+                <motion.a 
+                  key={link.name}
+                  href={link.href}
+                  variants={linkVariants}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="text-3xl font-bold text-slate-800 dark:text-slate-100 hover:text-primary dark:hover:text-primary cursor-pointer tracking-tight"
+                >
+                  {link.name}
+                </motion.a>
+              ))}
             </div>
-            <a 
-                href="public/Resume/Mark_Pigome_Resume.pdf"
+
+            {/* Actions Section */}
+            <motion.div 
+              variants={linkVariants}
+              className="w-full max-w-xs flex flex-col gap-4 items-center"
+            >
+              {/* Theme Toggle Button */}
+              <button 
+                onClick={toggleTheme} 
+                className="flex items-center gap-3 px-6 py-3 rounded-xl bg-slate-100 dark:bg-white/5 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-white/10 w-full justify-center transition-colors hover:border-primary/50"
+              >
+                {theme === 'dark' ? (
+                  <>
+                    <FaSun className="text-primary" />
+                    <span className="font-semibold">Light Mode</span>
+                  </>
+                ) : (
+                  <>
+                    <FaMoon className="text-primary" />
+                    <span className="font-semibold">Dark Mode</span>
+                  </>
+                )}
+              </button>
+
+              {/* Resume Download */}
+              <a 
+                href="/Mark_Pigome_Resume.pdf"
                 download="Mark_Pigome_Resume.pdf"
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-secondary rounded-lg text-white font-bold"
+                className="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-primary to-secondary rounded-xl text-white font-bold w-full justify-center shadow-lg shadow-primary/20"
               >
                 <FaDownload />
                 <span>Download Resume</span>
               </a>
+            </motion.div>
+
+            {/* Footer Text */}
+            <motion.div 
+              variants={linkVariants}
+              className="absolute bottom-10 text-slate-400 text-sm font-mono"
+            >
+              MP.dev // Portfolio
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
