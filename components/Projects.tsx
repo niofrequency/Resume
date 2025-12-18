@@ -118,7 +118,13 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
 
         <div className="p-8 flex-1 flex flex-col">
           <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{project.title}</h3>
-          <p className="text-slate-600 dark:text-slate-400 mb-6 line-clamp-4 flex-1">{project.description}</p>
+          
+          {/* Scrollable Description Container */}
+          <div className="mb-6 flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-white/10 max-h-[160px]">
+            <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
+              {project.description}
+            </p>
+          </div>
           
           <div className="flex flex-wrap gap-2 mb-8">
             {project.tags.map((tag) => (
