@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { PROJECTS } from '../constants';
-import { FaGithub, FaExternalLinkAlt, FaShieldAlt, FaSnowflake } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaShieldAlt, FaSnowflake, FaRocket } from 'react-icons/fa';
 import { Project } from '../types';
 
 const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
@@ -31,6 +31,16 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   // Helper function to render the correct logo based on ID
   const renderProjectLogo = () => {
     switch (project.id) {
+      case 'rank-rocket':
+        return (
+          <div className="w-full h-full bg-[#1e1b4b] flex items-center justify-center relative overflow-hidden">
+            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,#4f46e5_1px,transparent_1px)] [background-size:24px_24px]" />
+            <div className="flex flex-col items-center relative z-10">
+                <FaRocket className="text-pink-500 text-5xl mb-2 drop-shadow-[0_0_10px_rgba(236,72,153,0.8)]" />
+                <span className="text-white text-7xl font-black tracking-tighter italic">RR</span>
+            </div>
+          </div>
+        );
       case 'carrier-extract':
         return (
           <div className="w-full h-full bg-slate-900 flex items-center justify-center overflow-hidden">
