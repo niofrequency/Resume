@@ -1,27 +1,18 @@
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PERSONAL_INFO } from '../constants';
 import { FaWhatsapp, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaCheck } from 'react-icons/fa';
 
 const Contact: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    message: ''
-  });
+  const [message, setMessage] = useState('');
   const [status, setStatus] = useState<'idle' | 'success'>('idle');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Construct the formatted WhatsApp message
-    const text = `*Portfolio Inquiry*\n\n*Name:* ${formData.name}\n\n*Message:*\n${formData.message}`;
+    // Construct the simplified WhatsApp message
+    const text = `*Portfolio Inquiry*\n\n*Message:*\n${message}`;
     
     // Sanitize phone number (remove spaces, +, etc.)
     const phoneNumber = PERSONAL_INFO.phone.replace(/[^0-9]/g, '');
@@ -34,7 +25,7 @@ const Contact: React.FC = () => {
 
     // Show success state and reset form
     setStatus('success');
-    setFormData({ name: '', message: '' });
+    setMessage('');
     
     // Reset button state after 3 seconds
     setTimeout(() => setStatus('idle'), 3000);
@@ -95,39 +86,26 @@ const Contact: React.FC = () => {
             </div>
 
             {/* Form */}
-            <form className="space-y-4" onSubmit={handleSubmit}>
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
-                <label className="block text-sm text-slate-600 dark:text-slate-400 mb-2">Name</label>
-                <input 
-                  type="text" 
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-white dark:bg-space-900/50 border border-slate-300 dark:border-white/10 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-primary transition-colors" 
-                  placeholder="John Doe" 
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm text-slate-600 dark:text-slate-400 mb-2">Message</label>
+                <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Message</label>
                 <textarea 
-                  rows={4} 
+                  rows={6} 
                   name="message"
-                  value={formData.message}
-                  onChange={handleChange}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                   required
-                  className="w-full bg-white dark:bg-space-900/50 border border-slate-300 dark:border-white/10 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-primary transition-colors" 
-                  placeholder="Tell me about your project..." 
+                  className="w-full bg-white dark:bg-space-900/50 border border-slate-300 dark:border-white/10 rounded-xl px-4 py-4 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all resize-none" 
+                  placeholder="Tell me about your project or inquiry..." 
                 />
               </div>
               
               <button 
                 type="submit"
-                className={`w-full py-4 rounded-lg font-bold transition-all flex items-center justify-center gap-2 shadow-lg
+                className={`w-full py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-3 shadow-lg transform active:scale-[0.98]
                   ${status === 'success' 
                     ? 'bg-green-500 text-white' 
-                    : 'bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:opacity-90'
+                    : 'bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:opacity-90 hover:shadow-green-500/20'
                   }
                 `}
               >
