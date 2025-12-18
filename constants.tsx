@@ -156,3 +156,4 @@ export const SERVICES: Service[] = [
     icon: <FaCogs className="text-4xl text-accent-warning" />
   }
 ];
+
