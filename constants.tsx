@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Project, Experience, Skill, Service } from './types';
 import { FaLaptopCode, FaMobileAlt, FaShieldAlt, FaCogs } from 'react-icons/fa';
@@ -77,6 +78,39 @@ export const EXPERIENCE: Experience[] = [
 
 export const PROJECTS: Project[] = [
   {
+    id: "carrier-extract",
+    title: "CarrierExtract",
+    description: "An AI-powered tool to extract structured TypeScript data from any PDF files. Engineered for developers who need to turn unstructured logistics or technical documents into actionable code objects.",
+    tags: ["AI", "PDF Parser", "TypeScript", "Next.js"],
+    links: {
+      demo: "https://carrier-extract.vercel.app/",
+      repo: "#"
+    },
+    image: ""
+  },
+  {
+    id: "mil-tiga-delapan",
+    title: "MIL TIGA DELAPAN",
+    description: "Official platform for a trusted Indonesian company specializing in integrated services for mining and industrial sectors. Designed to showcase reliable, high-quality solutions for operations in challenging environments.",
+    tags: ["Industrial", "Mining", "Corporate", "Logistics"],
+    links: {
+      demo: "https://mil-tiga-delapan.vercel.app/",
+      repo: "#"
+    },
+    image: ""
+  },
+  {
+    id: "daily-bread",
+    title: "DailyBread",
+    description: "A peaceful, journal-centric Bible study app featuring daily verses, multi-version support, and AI-powered original language word studies for deeper spiritual growth.",
+    tags: ["React", "AI", "PWA", "UI/UX"],
+    links: {
+      demo: "https://dailybreadjournal.vercel.app/",
+      repo: "#"
+    },
+    image: ""
+  },
+  {
     id: "reefer-guru",
     title: "Reefer Guru",
     description: "An AI-powered assistant designed specifically for Reefer Container Technicians. It helps diagnose faults, suggests repair procedures, and interprets error codes in real-time, drastically reducing downtime in cold chain logistics.",
@@ -85,7 +119,6 @@ export const PROJECTS: Project[] = [
       demo: "https://reefer-guru.vercel.app/",
       repo: "#"
     },
-    // Using a custom generated logo in the component instead
     image: "" 
   },
   {
@@ -97,7 +130,6 @@ export const PROJECTS: Project[] = [
       demo: "https://site-armor.vercel.app/",
       repo: "#"
     },
-    // Using a custom generated logo in the component instead
     image: ""
   }
 ];
