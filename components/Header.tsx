@@ -137,7 +137,7 @@ const Header: React.FC = () => {
           </button>
 
           <a 
-            href="/public/Resume/Mark_Pigome_Resume.pdf"
+            href="/Resume/Mark_Pigome_Resume.pdf"
             download="Mark_Pigome_Resume.pdf"
             className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary to-secondary rounded-lg text-white font-bold text-sm hover:opacity-90 transition-opacity shadow-[0_0_15px_rgba(0,212,255,0.3)]"
           >
