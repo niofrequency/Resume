@@ -84,7 +84,7 @@ export const PROJECTS: Project[] = [
     tags: ["AI", "SEO", "Search Grounding", "Next.js"],
     links: {
       demo: "https://rankrocket.vercel.app/",
-      repo: "#"
+      repo: "https://github.com/niofrequency/Rank-Rocket"
     },
     image: ""
   },
@@ -95,7 +95,7 @@ export const PROJECTS: Project[] = [
     tags: ["AI", "PDF Parser", "TypeScript", "Next.js"],
     links: {
       demo: "https://carrier-extract.vercel.app/",
-      repo: "#"
+      repo: "https://github.com/niofrequency/Carrier-Extract"
     },
     image: ""
   },
@@ -106,7 +106,7 @@ export const PROJECTS: Project[] = [
     tags: ["Industrial", "Mining", "Corporate", "Logistics"],
     links: {
       demo: "https://mil-tiga-delapan.vercel.app/",
-      repo: "#"
+      repo: "https://github.com/niofrequency/MIL-TIGA-DELAPAN"
     },
     image: ""
   },
@@ -117,7 +117,7 @@ export const PROJECTS: Project[] = [
     tags: ["React", "AI", "PWA", "UI/UX"],
     links: {
       demo: "https://dailybreadjournal.vercel.app/",
-      repo: "#"
+      repo: "https://github.com/niofrequency/Daily-Bread"
     },
     image: ""
   },
@@ -128,7 +128,7 @@ export const PROJECTS: Project[] = [
     tags: ["React", "OpenAI API", "Node.js", "PWA"],
     links: {
       demo: "https://reefer-guru.vercel.app/",
-      repo: "#"
+      repo: "https://github.com/niofrequency/ReeferGuru"
     },
     image: "" 
   },
@@ -139,7 +139,7 @@ export const PROJECTS: Project[] = [
     tags: ["Python", "Django", "Cybersecurity", "React"],
     links: {
       demo: "https://site-armor.vercel.app/",
-      repo: "#"
+      repo: "https://github.com/niofrequency/Site-Armor"
     },
     image: ""
   }
@@ -167,4 +167,3 @@ export const SERVICES: Service[] = [
     icon: <FaCogs className="text-4xl text-accent-warning" />
   }
 ];
-
