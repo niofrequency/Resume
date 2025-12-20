@@ -145,6 +145,8 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
             </a>
             <a 
               href={project.links.repo} 
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex-1 flex items-center justify-center gap-2 py-3 bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-white/20 transition-colors"
             >
               <FaGithub /> Source
@@ -182,4 +184,3 @@ const Projects: React.FC = () => {
 };
 
 export default Projects;
-
