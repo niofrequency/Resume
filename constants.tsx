@@ -10,11 +10,10 @@ export const PERSONAL_INFO = {
   phone: "+62 852 1812 5850", // Fixed format for wa.me link functionality
   location: "Papua, Indonesia",
   availability: "Available for freelance",
-  about: `I am a versatile Full-Stack Developer with a background that spans continents and industries—from high-stakes logistics in Indonesia to facility operations in the U.S. My journey into tech wasn't linear; it was built on a foundation of solving complex, real-world problems in administration, field operations, and IT.
-
-I don't just write code; I engineer efficiency. With experience managing critical cold chain logistics for over 380 containers and leading cross-functional teams, I understand that software is ultimately about people and process. I translate this operational expertise into robust digital solutions—automating workflows, building intuitive infrastructure, and bridging the gap between technical capability and business goals.
-
-Fluent in English and Bahasa Indonesian, I thrive in dynamic, multicultural environments. Whether I'm architecting a new web platform or optimizing a supply chain algorithm, I bring a leadership mindset, acute attention to detail, and a commitment to aligning technology with human purpose.`
+  about: `Versatile Full-Stack Developer and autodidact coder with a non-linear journey into tech—self-taught through online tutorials and hobby projects that grew into professional solutions. Spent 15 years growing up in the USA, where I first picked up coding as a hobby, before returning to Indonesia and channeling hands-on operational experience into practical digital tools.
+I don't just write code; I engineer efficiency—automating workflows, building intuitive infrastructure, and aligning technology with real-world business and human needs. Skilled in integrating third-party APIs (such as OpenAI/Gemini for AI features, Google grounding for real-time data, and PDF processing libraries) to enhance functionality, while leveraging open-source code and libraries (e.g., React ecosystems, TypeScript tools, Vite for builds) to accelerate development and ensure robust, maintainable projects.
+Proudest achievement: developing and selling Reefer Guru (reefer-guru.vercel.app) to my current employer, PT. Panjasa Intradin (panjasa-intradin.com)—an AI diagnostic assistant that translates English Carrier Transicold handbooks into Indonesian for refrigerated container technicians.
+Fluent in English and Bahasa Indonesian, I thrive in dynamic, multicultural environments with strong leadership, acute attention to detail, and a commitment to purposeful technology.`
 };
 
 export const SKILLS: Skill[] = [
