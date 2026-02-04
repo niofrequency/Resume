@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { PROJECTS } from '../constants';
-import { FaGithub, FaExternalLinkAlt, FaShieldAlt, FaSnowflake, FaRocket, FaDatabase, FaCogs, FaBookOpen } from 'react-icons/fa';
+// --- ADDED FaSatellite HERE ---
+import { FaGithub, FaExternalLinkAlt, FaShieldAlt, FaSnowflake, FaRocket, FaDatabase, FaCogs, FaBookOpen, FaSatellite } from 'react-icons/fa';
 import { Project } from '../types';
 
 const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
@@ -72,6 +72,9 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
 
   const renderProjectLogo = () => {
     switch (project.id) {
+      // --- ADDED NEW CASE HERE ---
+      case 'navidex':
+        return <CarbonLogo acronym="NX" icon={FaSatellite} />;
       case 'rank-rocket':
         return <CarbonLogo acronym="RR" icon={FaRocket} />;
       case 'carrier-extract':
