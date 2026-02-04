@@ -80,6 +80,28 @@ export const EXPERIENCE: Experience[] = [
 
 export const PROJECTS: Project[] = [
   {
+    id: "navidex",
+    title: "NAVIDEX",
+    description: "A real-time IoT fleet monitoring system for refrigerated containers. Features live WebSocket telemetry, GIS asset tracking, and hardware health analytics (battery, signal, temp) to ensure cold chain integrity.",
+    tags: ["React", "IoT", "Node.js", "WebSockets", "Leaflet"],
+    links: {
+      demo: "https://navidex.vercel.app/",
+      repo: "https://github.com/niofrequency/NAVIDEX/"
+    },
+    image: ""
+  },
+  {
+    id: "reefer-guru",
+    title: "Reefer Guru",
+    description: "An AI-powered assistant designed specifically for Reefer Container Technicians. It helps diagnose faults, suggests repair procedures, and interprets error codes in real-time, drastically reducing downtime in cold chain logistics.",
+    tags: ["React", "OpenAI API", "Node.js", "PWA"],
+    links: {
+      demo: "https://reefer-guru.vercel.app/",
+      repo: "https://github.com/niofrequency/ReeferGuru"
+    },
+    image: "" 
+  },
+  {
     id: "rank-rocket",
     title: "Rank Rocket",
     description: "A professional SEO keyword research tool powered by advanced AI, featuring live search grounding for accurate, real-time metrics and insights.",
@@ -87,6 +109,17 @@ export const PROJECTS: Project[] = [
     links: {
       demo: "https://rankrocket.vercel.app/",
       repo: "https://github.com/niofrequency/Rank-Rocket"
+    },
+    image: ""
+  },
+  {
+    id: "site-armor",
+    title: "Site Armor",
+    description: "A comprehensive real-time website security scanner. Site Armor proactively monitors web assets for vulnerabilities, malware signatures, and SSL expiration, providing instant alerts and detailed remediation reports.",
+    tags: ["Python", "Django", "Cybersecurity", "React"],
+    links: {
+      demo: "https://site-armor.vercel.app/",
+      repo: "https://github.com/niofrequency/Site-Armor"
     },
     image: ""
   },
@@ -120,28 +153,6 @@ export const PROJECTS: Project[] = [
     links: {
       demo: "https://dailybreadjournal.vercel.app/",
       repo: "https://github.com/niofrequency/Daily-Bread"
-    },
-    image: ""
-  },
-  {
-    id: "reefer-guru",
-    title: "Reefer Guru",
-    description: "An AI-powered assistant designed specifically for Reefer Container Technicians. It helps diagnose faults, suggests repair procedures, and interprets error codes in real-time, drastically reducing downtime in cold chain logistics.",
-    tags: ["React", "OpenAI API", "Node.js", "PWA"],
-    links: {
-      demo: "https://reefer-guru.vercel.app/",
-      repo: "https://github.com/niofrequency/ReeferGuru"
-    },
-    image: "" 
-  },
-  {
-    id: "site-armor",
-    title: "Site Armor",
-    description: "A comprehensive real-time website security scanner. Site Armor proactively monitors web assets for vulnerabilities, malware signatures, and SSL expiration, providing instant alerts and detailed remediation reports.",
-    tags: ["Python", "Django", "Cybersecurity", "React"],
-    links: {
-      demo: "https://site-armor.vercel.app/",
-      repo: "https://github.com/niofrequency/Site-Armor"
     },
     image: ""
   }
