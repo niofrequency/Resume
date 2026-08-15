@@ -4,7 +4,7 @@ import { PERSONAL_INFO } from '../constants';
 import { db } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { FaWhatsapp, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaCheck, FaUser } from 'react-icons/fa';
-
+ 
 const Contact: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
