@@ -1,34 +1,48 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PERSONAL_INFO } from '../constants';
-import { FaWhatsapp, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaCheck } from 'react-icons/fa';
+import { db } from '../lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { FaWhatsapp, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaCheck, FaUser } from 'react-icons/fa';
 
 const Contact: React.FC = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const [status, setStatus] = useState<'idle' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Construct the simplified WhatsApp message
-    const text = `*Portfolio Inquiry*\n\n*Message:*\n${message}`;
-    
-    // Sanitize phone number (remove spaces, +, etc.)
-    const phoneNumber = PERSONAL_INFO.phone.replace(/[^0-9]/g, '');
-    
-    // Create WhatsApp URL
-    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
+    if (status === 'sending') return;
+    setStatus('sending');
 
-    // Open WhatsApp in a new tab
-    window.open(url, '_blank');
+    try {
+      // 1. Save the lead to Firestore so it's never lost, even if the
+      //    visitor doesn't have WhatsApp or closes the tab.
+      await addDoc(collection(db, 'messages'), {
+        name,
+        email,
+        message,
+        source: 'contact_form',
+        createdAt: serverTimestamp(),
+      });
 
-    // Show success state and reset form
-    setStatus('success');
-    setMessage('');
-    
-    // Reset button state after 3 seconds
-    setTimeout(() => setStatus('idle'), 3000);
+      // 2. Also open WhatsApp pre-filled, for an instant chat if they want it.
+      const text = `*Portfolio Inquiry*\n\n*Nama:* ${name}\n*Email:* ${email}\n\n*Pesan:*\n${message}`;
+      const phoneNumber = PERSONAL_INFO.phone.replace(/[^0-9]/g, '');
+      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+
+      setStatus('success');
+      setName('');
+      setEmail('');
+      setMessage('');
+      setTimeout(() => setStatus('idle'), 4000);
+    } catch (err) {
+      console.error('Failed to save message to Firestore:', err);
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 4000);
+    }
   };
 
   return (
@@ -86,11 +100,37 @@ const Contact: React.FC = () => {
             </div>
 
             {/* Form */}
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-5" onSubmit={handleSubmit}>
+              <div className="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Nama</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    className="w-full bg-white dark:bg-space-900/50 border border-slate-300 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                    placeholder="Nama Anda"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="w-full bg-white dark:bg-space-900/50 border border-slate-300 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                    placeholder="email@anda.com"
+                  />
+                </div>
+              </div>
               <div>
                 <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Message</label>
                 <textarea 
-                  rows={6} 
+                  rows={5} 
                   name="message"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
@@ -102,23 +142,33 @@ const Contact: React.FC = () => {
               
               <button 
                 type="submit"
-                className={`w-full py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-3 shadow-lg transform active:scale-[0.98]
+                disabled={status === 'sending'}
+                className={`w-full py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-3 shadow-lg transform active:scale-[0.98] disabled:opacity-70
                   ${status === 'success' 
                     ? 'bg-green-500 text-white' 
+                    : status === 'error'
+                    ? 'bg-red-500 text-white'
                     : 'bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:opacity-90 hover:shadow-green-500/20'
                   }
                 `}
               >
                 {status === 'success' ? (
                   <>
-                    <FaCheck /> WhatsApp Opened!
+                    <FaCheck /> Pesan Terkirim!
                   </>
+                ) : status === 'sending' ? (
+                  <>Mengirim...</>
+                ) : status === 'error' ? (
+                  <>Gagal, coba lagi</>
                 ) : (
                   <>
                     <FaWhatsapp className="text-xl" /> Send via WhatsApp
                   </>
                 )}
               </button>
+              <p className="text-xs text-slate-500 dark:text-slate-500 text-center">
+                Pesan Anda juga tersimpan otomatis, jadi tetap sampai walau WhatsApp tidak terbuka.
+              </p>
             </form>
           </div>
 
