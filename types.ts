@@ -10,6 +10,8 @@ export interface Project {
     repo: string;
   };
   image: string;
+  internal?: boolean; // true = private/proprietary client system, no public demo or repo
+  client?: string; // company this was built for
 }
 
 export interface Experience {
