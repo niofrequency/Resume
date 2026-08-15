@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { auth, db } from '../lib/firebase';
 import {
   onAuthStateChanged,
-  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
   signOut,
   User,
 } from 'firebase/auth';
@@ -13,12 +14,11 @@ import {
   onSnapshot,
   Timestamp,
 } from 'firebase/firestore';
-import { FaWhatsapp, FaEnvelope, FaSignOutAlt, FaLock } from 'react-icons/fa';
+import { FaWhatsapp, FaEnvelope, FaSignOutAlt, FaLock, FaGoogle } from 'react-icons/fa';
 
 // Only this email is allowed to see anything past the login form.
-// The Firestore rules enforce this too (server-side), this is just
-// a fast client-side check so a random logged-in-elsewhere account
-// can't even flash the dashboard UI.
+// The Firestore rules enforce this too (server-side) — this client-side
+// check just rejects any other Google account immediately after sign-in.
 const ADMIN_EMAIL = 'mpigome44@gmail.com';
 
 interface MessageDoc {
@@ -44,18 +44,23 @@ const formatDate = (ts?: Timestamp) => {
 };
 
 const LoginForm: React.FC<{ onError: (msg: string) => void; error: string }> = ({ onError, error }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleGoogleLogin = async () => {
     setLoading(true);
     onError('');
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      if (result.user.email?.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+        // Not the owner's account — kick them out right away.
+        await signOut(auth);
+        onError('Akun Google ini tidak diizinkan mengakses halaman ini.');
+      }
     } catch (err: any) {
-      onError('Login gagal. Periksa email dan password Anda.');
+      if (err?.code !== 'auth/popup-closed-by-user') {
+        onError('Login gagal. Coba lagi.');
+      }
     } finally {
       setLoading(false);
     }
@@ -70,32 +75,15 @@ const LoginForm: React.FC<{ onError: (msg: string) => void; error: string }> = (
         <h1 className="text-2xl font-bold text-white text-center mb-1">Admin Login</h1>
         <p className="text-slate-400 text-sm text-center mb-6">Khusus untuk pemilik situs.</p>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-            className="w-full bg-space-900/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
-          />
-          <input
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            className="w-full bg-space-900/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
-          />
-          {error && <p className="text-red-400 text-sm text-center">{error}</p>}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 rounded-xl font-bold bg-gradient-to-r from-primary to-secondary text-space-900 hover:opacity-90 transition-all disabled:opacity-60"
-          >
-            {loading ? 'Masuk...' : 'Masuk'}
-          </button>
-        </form>
+        <button
+          onClick={handleGoogleLogin}
+          disabled={loading}
+          className="w-full py-3 rounded-xl font-bold bg-white text-slate-800 hover:bg-slate-100 transition-all disabled:opacity-60 flex items-center justify-center gap-3"
+        >
+          <FaGoogle className="text-lg" />
+          {loading ? 'Membuka Google...' : 'Masuk dengan Google'}
+        </button>
+        {error && <p className="text-red-400 text-sm text-center mt-4">{error}</p>}
       </div>
     </div>
   );
@@ -219,6 +207,15 @@ const AdminPage: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [checking, setChecking] = useState(true);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    // Keep this page out of Google/search results.
+    const meta = document.createElement('meta');
+    meta.name = 'robots';
+    meta.content = 'noindex, nofollow';
+    document.head.appendChild(meta);
+    return () => { document.head.removeChild(meta); };
+  }, []);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => {
