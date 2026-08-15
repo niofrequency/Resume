@@ -4,7 +4,7 @@ import { PROJECTS } from '../constants';
 // --- ADDED FaSatellite HERE ---
 import { FaGithub, FaExternalLinkAlt, FaShieldAlt, FaSnowflake, FaRocket, FaDatabase, FaCogs, FaBookOpen, FaSatellite, FaShip, FaClipboardCheck, FaLock } from 'react-icons/fa';
 import { Project } from '../types';
-
+ 
 const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
