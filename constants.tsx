@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Project, Experience, Skill, Service } from './types';
 import { FaLaptopCode, FaMobileAlt, FaShieldAlt, FaCogs } from 'react-icons/fa';
@@ -79,6 +78,32 @@ export const EXPERIENCE: Experience[] = [
 ];
 
 export const PROJECTS: Project[] = [
+  {
+    id: "panjasa-service-request",
+    title: "PT. Panjasa Intradin — Service Management System",
+    description: "A secure, real-time enterprise system built for PT. Panjasa Intradin to manage container damage intake, cross-hub workshop repairs (Timika, Surabaya, and Jakarta), audit tracking, and role-based access control. Features a full RBAC permission matrix (Admin, Technician, Supervisor, Manager), vessel shipment & manifest tracking with bulk CSV/Excel upload, direct photo attachments with client-side compression, real-time Firestore sync, automated Google Apps Script fleet inventory sync from Google Sheets, and a printable audit-trail PDF report generator.",
+    tags: ["React", "TypeScript", "Firebase", "Firestore", "RBAC", "Google Apps Script"],
+    links: {
+      demo: "",
+      repo: ""
+    },
+    image: "",
+    internal: true,
+    client: "PT. Panjasa Intradin"
+  },
+  {
+    id: "psu-fieldops",
+    title: "PSU FieldOps — Pangansari Utama Internal System",
+    description: "A mobile-first, installable operations app built for Pangansari Utama (Food Resources Solutions): role-based digital checklists, photo-verified work orders, and multi-level approvals for Housekeeping and Food Safety teams, plus an admin portal and analytics dashboard. Fully bilingual (English/Bahasa Indonesia, including checklist text), installs to the home screen as a PWA on Android/iPhone/desktop, and runs on Firebase Auth + Firestore with admin-managed role assignment enforced both client-side and in security rules.",
+    tags: ["React", "TypeScript", "Firebase", "PWA", "Bilingual"],
+    links: {
+      demo: "",
+      repo: ""
+    },
+    image: "",
+    internal: true,
+    client: "Pangansari Utama"
+  },
   {
     id: "navidex",
     title: "NAVIDEX",
