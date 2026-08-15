@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { PROJECTS } from '../constants';
 // --- ADDED FaSatellite HERE ---
-import { FaGithub, FaExternalLinkAlt, FaShieldAlt, FaSnowflake, FaRocket, FaDatabase, FaCogs, FaBookOpen, FaSatellite } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaShieldAlt, FaSnowflake, FaRocket, FaDatabase, FaCogs, FaBookOpen, FaSatellite, FaShip, FaClipboardCheck, FaLock } from 'react-icons/fa';
 import { Project } from '../types';
 
 const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
@@ -72,6 +72,10 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
 
   const renderProjectLogo = () => {
     switch (project.id) {
+      case 'panjasa-service-request':
+        return <CarbonLogo acronym="SRM" icon={FaShip} />;
+      case 'psu-fieldops':
+        return <CarbonLogo acronym="PSU" icon={FaClipboardCheck} />;
       // --- ADDED NEW CASE HERE ---
       case 'navidex':
         return <CarbonLogo acronym="NX" icon={FaSatellite} />;
@@ -121,6 +125,12 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
 
         <div className="p-8 flex-1 flex flex-col">
           <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{project.title}</h3>
+
+          {project.internal && project.client && (
+            <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full bg-secondary/10 border border-secondary/30 text-secondary text-xs font-bold w-fit">
+              <FaLock className="text-[10px]" /> Built for {project.client}
+            </div>
+          )}
           
           {/* Scrollable Description Container */}
           <div className="mb-6 flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-white/10 max-h-[160px]">
@@ -137,24 +147,30 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
             ))}
           </div>
 
-          <div className="flex gap-4">
-            <a 
-              href={project.links.demo} 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center gap-2 py-3 bg-primary text-space-900 font-bold rounded-lg hover:bg-cyan-300 transition-colors"
-            >
-              <FaExternalLinkAlt /> View Live
-            </a>
-            <a 
-              href={project.links.repo} 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center gap-2 py-3 bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-white/20 transition-colors"
-            >
-              <FaGithub /> Source
-            </a>
-          </div>
+          {project.internal ? (
+            <div className="flex items-center justify-center gap-2 py-3 bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400 font-bold rounded-lg border border-dashed border-slate-300 dark:border-white/10 text-sm">
+              <FaLock /> Private Internal System — Proprietary
+            </div>
+          ) : (
+            <div className="flex gap-4">
+              <a 
+                href={project.links.demo} 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center gap-2 py-3 bg-primary text-space-900 font-bold rounded-lg hover:bg-cyan-300 transition-colors"
+              >
+                <FaExternalLinkAlt /> View Live
+              </a>
+              <a 
+                href={project.links.repo} 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center gap-2 py-3 bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-white/20 transition-colors"
+              >
+                <FaGithub /> Source
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </motion.div>
