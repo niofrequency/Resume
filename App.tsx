@@ -12,7 +12,7 @@ import Footer from './components/Footer';
  
 function App() {
   
-  // Easter Egg
+  // Easter Egg 
   useEffect(() => {
     console.log(
       "%c Hey recruiter! Yes, I built this from scratch 🚀",
