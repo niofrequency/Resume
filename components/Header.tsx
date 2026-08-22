@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { FaSun, FaMoon, FaDownload, FaBars, FaTimes } from 'react-icons/fa';
 // Fix: Import Variants type from framer-motion to resolve type inference issues with animation properties
@@ -46,7 +44,6 @@ const Header: React.FC = () => {
       const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.scrollY - headerOffset;
-
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth"
@@ -96,7 +93,7 @@ const Header: React.FC = () => {
   return (
     <header 
       className={`fixed top-0 w-full z-[100] transition-all duration-300 ${
-        isScrolled || isMobileMenuOpen
+        isScrolled || isMobileMenuOpen 
           ? 'py-4 bg-white/90 dark:bg-space-900/95 backdrop-blur-md border-b border-slate-200 dark:border-white/10' 
           : 'py-6 bg-transparent'
       }`}
@@ -137,8 +134,8 @@ const Header: React.FC = () => {
           </button>
 
           <a 
-            href="/Resume/Mark-Pigome-CV.pdf"
-            download="Mark-Pigome-CV.pdf"
+            href="/Resume/Mark_Pigome_Resume.pdf"
+            download="Mark_Pigome_Resume.pdf"
             className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary to-secondary rounded-lg text-white font-bold text-sm hover:opacity-90 transition-opacity shadow-[0_0_15px_rgba(0,212,255,0.3)]"
           >
             <FaDownload />
@@ -206,7 +203,7 @@ const Header: React.FC = () => {
 
               {/* Resume Download */}
               <a 
-                href="/Mark_Pigome_Resume.pdf"
+                href="/Resume/Mark_Pigome_Resume.pdf"
                 download="Mark_Pigome_Resume.pdf"
                 className="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-primary to-secondary rounded-xl text-white font-bold w-full justify-center shadow-lg shadow-primary/20"
               >
